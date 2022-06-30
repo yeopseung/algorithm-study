@@ -21,12 +21,9 @@ import java.util.*;
 
  */
 public class B_1744 {
-    private static List<Integer> negative;
-    private static List<Integer> positive;
 
     private static boolean zero;
 
-    private static int size;
     private static int result;
 
 
@@ -35,15 +32,15 @@ public class B_1744 {
         int tem;
 
         Scanner scanner = new Scanner(System.in);
-        negative = new ArrayList<>();
-        positive = new ArrayList<>();
+        List<Integer> negative = new ArrayList<>();
+        List<Integer> positive = new ArrayList<>();
 
 
         //수열의 크기 입력
-        size = scanner.nextInt();
+        int size = scanner.nextInt();
 
         //수열의 수 입력
-        for (int i=0; i<size; i++)
+        for (int i = 0; i< size; i++)
         {
             tem = scanner.nextInt();
             if(tem>1)
@@ -55,6 +52,9 @@ public class B_1744 {
             else if(tem<0)
                 negative.add(tem);
         }
+
+
+
         //양수 내림차순 정렬
         Collections.sort(positive,Collections.reverseOrder());
         //음수 오름차순 정렬
@@ -63,7 +63,7 @@ public class B_1744 {
 
 
         //양수 계산
-        for(int i=0; i<positive.size(); i++)
+        for(int i = 0; i< positive.size(); i++)
         {
             //홀수일때 마지막 숫자 계산
             if(i == positive.size()-1 && positive.size()%2 != 0)
@@ -82,7 +82,7 @@ public class B_1744 {
         }
 
         //음수 계산
-        for(int i=0; i<negative.size(); i++)
+        for(int i = 0; i< negative.size(); i++)
         {
             //홀수이며 0이 존재하면 가장 큰 음수와 0 묶음
             if(i == negative.size()-1 && negative.size()%2 != 0)
