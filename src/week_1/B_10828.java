@@ -1,6 +1,6 @@
-import java.util.ArrayList;
+package week_1;
+
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class B_10828 {
     public static void main(String[] args) {
