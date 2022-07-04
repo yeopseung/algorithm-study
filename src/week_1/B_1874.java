@@ -3,7 +3,7 @@ package week_1;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class B_1847 {
+public class B_1874 {
     public static void main(String[] args) {
         int n, num, start = 1, top = 1;
 
