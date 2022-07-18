@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class B_2573 {
+public class B_2573_V2 {
+    static int[] rangeX = { -1, 0, 1, 0 };
+    static int[] rangeY = { 0, 1, 0, -1 };
     static int N,M,year=0,split=0;
     static int[][] list;
     static boolean[][] marked;
@@ -37,20 +39,20 @@ public class B_2573 {
             {
                 for(int j=0; j<M; j++)
                 {
-                    if(!marked[i][j] && list[i][j] > 0)
+                    if(list[i][j] > 0)
                     {
                         melt(i,j);
                     }
                     //System.out.print(list[i][j] + " ");
                 }
-               //System.out.println();
+                //System.out.println();
             }
             year++;
 
 
             marked = new boolean[N][M];
             split =0;
-            for(int i=0; i<N-1; i++)
+            for(int i=0; i<N; i++)
             {
                 for(int j=0; j<M; j++)
                 {
@@ -73,100 +75,55 @@ public class B_2573 {
                 System.out.println(0);
                 return;
             }
-
         }
 
     }
 
-    static void melt(int i, int j)
+    static void melt(int x, int y)
     {
+        int dx, dy;
         int count=0;
-        marked[i][j] = true;
+        marked[x][y] = true;
 
-        //상
-        if(0<= i-1 && i-1 < N)
-        {
-            if(!marked[i-1][j])
-            {
-                if(list[i-1][j]>0)
-                    melt(i-1,j);
-                else
-                    count++;
+        for (int i = 0; i < 4; i++) {
+            dx = x + rangeX[i];
+            dy = y + rangeY[i];
+
+            if (dx < 0 || dy < 0 || dx >= N || dy >= M) {
+                continue;
             }
-        }
 
-        //하
-        if(i+1 < N)
-        {
-            if(!marked[i+1][j])
-            {
-                if(list[i+1][j]>0)
-                    melt(i+1,j);
-                else
-                    count++;
+            if (!marked[dx][dy] && list[dx][dy] == 0) {
+                count++;
             }
-        }
 
-
-        //좌
-        if(0<= j-1 && j-1 <M)
-        {
-            if(!marked[i][j-1])
-            {
-                if(list[i][j-1]>0)
-                    melt(i,j-1);
-                else
-                    count++;
-            }
-        }
-
-        //우
-        if(j+1 < M)
-        {
-            if(!marked[i][j+1])
-            {
-                if(list[i][j+1]>0)
-                    melt(i,j+1);
-                else
-                    count++;
-            }
         }
 
 
 
-
-        list[i][j] -= count;
-        if(list[i][j] <0)
-            list[i][j] =0;
+        if (list[x][y] - count < 0) {
+            list[x][y] = 0;
+        } else {
+            list[x][y] -= count;
+        }
 
     }
-    static void dfs(int i, int j)
+    static void dfs(int x, int y)
     {
-        marked[i][j] = true;
+        marked[x][y] = true;
 
-        //상
-        if(i+1 < N)
-        {
-            if(!marked[i+1][j] && list[i+1][j] != 0)
-                dfs(i+1,j);
-        }
-        //하
-        if(0<= i-1 && i-1 < N)
-        {
-            if(!marked[i-1][j] && list[i-1][j]  != 0)
-                dfs(i-1,j);
-        }
-        //좌
-        if(0<= j-1 && j-1 <M)
-        {
-            if(!marked[i][j-1] && list[i][j-1]  != 0)
-                dfs(i,j-1);
-        }
-        //우
-        if(j+1 < M)
-        {
-            if(!marked[i][j+1] && list[i][j+1]  != 0)
-                dfs(i,j+1);
+        int dx, dy;
+        for (int i = 0; i < 4; i++) {
+            dx = x + rangeX[i];
+            dy = y + rangeY[i];
+
+            if (dx < 0 || dy < 0 || dx >= N || dy >= M) {
+                continue;
+            }
+
+            if (list[dx][dy] != 0 && !marked[dx][dy]) {
+                dfs(dx, dy);
+            }
         }
     }
 }
