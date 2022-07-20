@@ -1,10 +1,6 @@
-package week_1;
+package week1;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Stack;
 import java.util.StringTokenizer;
 
 public class B_9093 {

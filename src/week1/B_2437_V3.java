@@ -1,8 +1,7 @@
-package week_1;
+package week1;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Scanner;
 
 public class B_2437_V3 {

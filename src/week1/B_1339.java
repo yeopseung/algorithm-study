@@ -1,10 +1,9 @@
-package week_1;
+package week1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class B_1339 {
 
