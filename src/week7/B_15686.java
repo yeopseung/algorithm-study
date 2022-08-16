@@ -76,6 +76,9 @@ public class B_15686 {
         House h;
         House c;
 
+
+        //각 집마다 M개 뽑은 치킨집과 거리를 비교함
+        //가장 가까운 치킨집 거리가 최소값을 만드므로 결과에 누적합함
         for(int i=0; i< house.size(); i++)
         {
             min = 9999;
