@@ -21,6 +21,7 @@ public class B_1038 {
             System.out.println(N);
             return;
         }
+        //aa
 
 
         //초기 queue 설정
