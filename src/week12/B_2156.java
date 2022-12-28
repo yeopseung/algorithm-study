@@ -51,6 +51,7 @@ public class B_2156 {
             dp[i] = Math.max(dp[i-1], Math.max(wine[i] + dp[i-2], wine[i] + wine[i-1] + dp[i-3]));
         }
 
+
         System.out.println(dp[N]);
     }
 }
