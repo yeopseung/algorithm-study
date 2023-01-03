@@ -45,17 +45,22 @@ public class B_2573
 
         while(true)
         {
+            // 1.빙산을 녹인다
             melt();
+            // 1년 추가
             year++;
 
+            // 2.빙하의 개수를 센다
             count_res = count();
 
+            // 3-2. 빙하가 전부 녹아도 빙하의 개수가 2개 이하면 0을 출력한다.
             if(count_res == 0)
             {
                 year = 0;
                 break;
             }
 
+            //3-1. 빙하의 개수가 2개 이상이면 종료하고 년도를 출력한다
             if(count_res >=2)
             {
                 break;
@@ -154,6 +159,7 @@ public class B_2573
         return cnt;
     }
 
+    // 빙하의 지도에서의 좌표 x,y
     static class Location
     {
         int x, y;
