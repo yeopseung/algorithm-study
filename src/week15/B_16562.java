@@ -3,12 +3,13 @@ package week15;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class B_16562
 {
-    static int N, M, K;
-    static int[] parent, cost;
+    static int N, M, K, sum;
+    static int[] parent, cost, result;
 
     public static void main(String[] args) throws IOException
     {
@@ -35,6 +36,7 @@ public class B_16562
         parent = new int[N+1];
         for(int i=1; i<=N; i++)
         {
+            // 초기값은 자기 자신
             parent[i] = i;
         }
 
@@ -42,29 +44,56 @@ public class B_16562
         for(int i=1; i<=M; i++)
         {
             st = new StringTokenizer(br.readLine());
+            // 두 친구 관계를 부모 인덱스로 합침 Union
+            unionParent(Integer.parseInt(st.nextToken()),Integer.parseInt(st.nextToken()));
+        }
+
+        // 순서가 정렬되어있지 않은 union find 의 경우 갱신 과정 필요
+        for(int i=1; i<=N; i++)
+        {
+            // 친구 관계 갱신
+            getParent(i);
+        }
+
+        // 그 묶음에서 최소 비용 더해줌
+        result = new int[N+1];
+        Arrays.fill(result,Integer.MAX_VALUE);
+        for(int i=1; i<=N; i++)
+        {
+            if(result[parent[i]] >= cost[i])
+                result[parent[i]] = cost[i];
 
         }
 
-        // 친구로 묶고
-        // 그 묶음에서 최소 비용 더해줌
+        sum = 0;
+        for(int i=1; i<=N; i++)
+        {
+            if(result[i] != Integer.MAX_VALUE)
+                sum += result[i];
+        }
+
+        if(K < sum)
+            System.out.println("Oh no");
+        else
+            System.out.println(sum);
 
     }
 
     // x 학생의 최상위 부모를 찾아서 리턴
-    private static int find(int x)
+    private static int getParent(int x)
     {
         if(parent[x] == x)
             return x;
         else
-            return parent[x] = find(parent[x]);
+            return parent[x] = getParent(parent[x]);
     }
 
 
     // 두가지를 하나의 부모 인덱스로 합침
-    private static void union(int x, int y)
+    private static void unionParent(int x, int y)
     {
-        x = find(x);
-        y = find(y);
+        x = getParent(x);
+        y = getParent(y);
 
         // if x = 2, y = 3
         // parent[3] = 2;
@@ -73,4 +102,16 @@ public class B_16562
         else
             parent[x] = y;
     }
+
+    // 두 개의 노드가 같은 부모인지 확인하는 함수
+    private static boolean findParent(int x, int y){
+        int t1 = getParent(x);
+        int t2 = getParent(y);
+
+        if(t1 != t2)
+            return true;
+        else
+            return false;
+    }
+
 }
