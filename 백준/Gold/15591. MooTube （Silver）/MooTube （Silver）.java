@@ -1,5 +1,4 @@
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -60,18 +59,18 @@ public class Main
 
     private static void bfs()
     {
-        Queue<Node> queue = new LinkedList<>();
+        Queue<Integer> queue = new LinkedList<>();
         boolean[] visited = new boolean[N+1];
         int result  = 0;
 
-        queue.add(new Node(V, Integer.MAX_VALUE));
+        queue.add(V);
         visited[V] = true;
 
         while(!queue.isEmpty())
         {
-            Node cur = queue.poll();
+            int cur = queue.poll();
 
-            for(Node next: graph.get(cur.index))
+            for(Node next: graph.get(cur))
             {
                 if(!visited[next.index])
                 {
@@ -79,7 +78,7 @@ public class Main
                     {
                         result++;
                         visited[next.index] = true;
-                        queue.add(new Node(next.index, next.cost));
+                        queue.add(next.index);
                     }
                 }
             }
