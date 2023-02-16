@@ -13,11 +13,8 @@ public class B_20056
     // 파이어 볼이 이동하는 8 방향
     private static final int[] rangeX = {-1,-1,0,1,1,1,0,-1};
     private static final int[] rangeY = {0,1,1,1,0,-1,-1,-1};
-
     private static final int[] odd = {1,3,5,7};
     private static final int[] even = {0,2,4,6};
-
-
     private static int N, M, K;
     private static LinkedList<FireBall>[][] map;
     private static Queue<FireBall> fireballs;
@@ -35,13 +32,13 @@ public class B_20056
         // K: 이동 명령 횟수
         K = Integer.parseInt(st.nextToken());
 
-        // map[][]: 파이어볼 이동 위치
+        // map[][]: 파이어볼의 이동 위치까지 고려하여 저장해놓는 ArrayList
         map = new LinkedList[N+1][N+1];
         for(int i=1; i<=N; i++)
             for(int j=1; j<=N; j++)
                 map[i][j] = new LinkedList<>();
 
-        // fireballs: 파이어 볼 저장 ArrayList;
+        // fireballs: 파이어 볼들의 정보를 저장해놓는 ArrayList;
         fireballs = new LinkedList<>();
         int r, c, m, s, d;
         for(int i = 0; i<M; i++)
@@ -84,14 +81,17 @@ public class B_20056
         int dx, dy;
         FireBall fb, m_fb;
 
+        // 파이어볼들을 저장해놓는 ArrayList 를 탐색
         for(int i=0; i<size; i++)
         {
             fb = fireballs.poll();
             map[fb.x][fb.y].remove(fb);
 
+            // 각 파이어볼의 이동 방향으로 이동함
             dx = fb.x + ((fb.s % N) * rangeX[fb.d]);
             dy = fb.y + ((fb.s % N) * rangeY[fb.d]);
 
+            // 예외처리: 파이어볼은 벽을 통과하여 순환함
             if(dx > N)
                 dx %= N;
             if(dy > N)
@@ -101,6 +101,7 @@ public class B_20056
             if(dy <= 0)
                 dy = N-Math.abs(dy);
 
+            // 각 파이어볼들을 이동시킴
             m_fb = new FireBall(dx,dy,fb.m,fb.s,fb.d);
 
             fireballs.add(m_fb);
@@ -116,16 +117,6 @@ public class B_20056
         int size;
         boolean isOdd, isEven;
 
-        // 2-1. 같은 칸에 있는 파이어볼이 하나로 합쳐짐
-        // 2-2. 파이어볼은 4개로 나누어짐
-
-        // 3. 나누어진 파이어볼의 질량, 속력, 방향은 다음과 같다.
-        // 3-1. 질량은 ⌊(합쳐진 파이어볼 질량의 합)/5⌋이다.
-        // 3-2. 속력은 ⌊(합쳐진 파이어볼 속력의 합)/(합쳐진 파이어볼의 개수)⌋이다.
-        // 3-3. 합쳐지는 파이어볼의 방향이 모두 홀수이거나 모두 짝수이면, 방향은 0, 2, 4, 6이 되고, 그렇지 않으면 1, 3, 5, 7이 된다.
-
-        // 4. 질량이 0인 파이어볼은 소멸되어 없어진다.
-
         for(int i=1; i<=N; i++)
         {
             for(int j=1; j<=N; j++)
@@ -140,6 +131,7 @@ public class B_20056
                 {
                     for(int k=0; k<size; k++)
                     {
+                        // 2-1. 같은 칸에 있는 파이어볼이 하나로 합쳐짐
                         fb = map[i][j].poll();
                         fireballs.remove(fb);
 
@@ -152,12 +144,17 @@ public class B_20056
                             isOdd = true;
                     }
 
-
+                    // 4. 질량이 0인 파이어볼은 소멸되어 없어진다.
                     if(s_m/5 <= 0)
                         continue;
 
+                    // 2-2. 파이어볼은 4개로 나누어짐
+                    // 3. 나누어진 파이어볼의 질량, 속력, 방향은 다음과 같다.
+                    // 3-1. 질량은 ⌊(합쳐진 파이어볼 질량의 합)/5⌋이다.
+                    // 3-2. 속력은 ⌊(합쳐진 파이어볼 속력의 합)/(합쳐진 파이어볼의 개수)⌋이다.
                     if(isEven & isOdd)
                     {
+                        // 3-3. 합쳐지는 파이어볼의 방향이 모두 홀수이거나 모두 짝수이면, 방향은 0, 2, 4, 6이 되고,
                         for(int k=0; k<4; k++)
                         {
                             n_fb = new FireBall(i,j,s_m/5,s_s/size,odd[k]);
@@ -168,6 +165,7 @@ public class B_20056
                     }
                     else
                     {
+                        // 그렇지 않으면 1, 3, 5, 7이 된다.
                         for(int k=0; k<4; k++)
                         {
                             n_fb = new FireBall(i,j,s_m/5,s_s/size,even[k]);
@@ -194,6 +192,5 @@ public class B_20056
             this.s = s;
             this.d = d;
         }
-
     }
 }
