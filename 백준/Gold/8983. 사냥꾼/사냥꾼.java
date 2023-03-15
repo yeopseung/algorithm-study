@@ -3,10 +3,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
-public class Main
-{
-    public static void main(String[] args) throws IOException
-    {
+public class Main {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
@@ -29,6 +27,8 @@ public class Main
             place[i] = Integer.parseInt(st.nextToken());
         }
 
+        // -L +bj +aj ≤ xi  ≤ L - bj +aj
+
         result = 0;
         for(int i=0; i<N; i++)
         {
@@ -37,31 +37,25 @@ public class Main
             x = Integer.parseInt(st.nextToken());
             y = Integer.parseInt(st.nextToken());
 
-            // 적절한 사대의 위치를 이분 탐색
             low = 0;
             high = M-1;
+
             while(low <= high)
             {
-                mid = (low + high)/2;
+                mid = (low + high) /2;
 
-                // 사대와 동물의 거리가 사정거리 내 일 경우 -> 사냥 성공
-                if((Math.abs(place[mid] - x) + y) <= L)
+                if(place[mid] > (L + x - y))
+                    high = mid-1;
+                else if(place[mid] < (-L +x +y))
+                    low = mid+1;
+                else
                 {
                     result++;
                     break;
                 }
-
-                // 사정거리 밖일 경우 -> x 좌표를 비교하여 사대 변경
-                if((place[mid] - x) < 0)
-                    // 값이 음수일 경우 -> 사대 기준 동물이 오른쪽에 있다는 뜻
-                    low = mid +1;
-                else
-                    // 값이 양수일 경우 -> 사대 기준 동물이 왼쪽에 있다는 뜻
-                    high = mid -1;
             }
         }
 
         System.out.println(result);
     }
-
 }
