@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -8,8 +10,9 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
 
-        int M, N, L, x, y, low, mid, high, result;
+        int M, N, L, a, b, x, low, mid, high, result;
         int[] place;
+        int[][] animal;
 
         st = new StringTokenizer(br.readLine());
         // M: 사대의 개수
@@ -26,33 +29,50 @@ public class Main {
         {
             place[i] = Integer.parseInt(st.nextToken());
         }
+        Arrays.sort(place);
 
         // -L +bj +aj ≤ xi  ≤ L - bj +aj
+
+        // place[]: 동물의 위치
+        animal = new int[N][2];
+        for(int i=0; i<N; i++)
+        {
+            st = new StringTokenizer(br.readLine());
+            // 동물의 위치 (a,b)
+            animal[i][0] = Integer.parseInt(st.nextToken());
+            animal[i][1] = Integer.parseInt(st.nextToken());
+        }
+        Arrays.sort(animal, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[0]- o2[0];
+            }
+        });
 
         result = 0;
         for(int i=0; i<N; i++)
         {
-            st = new StringTokenizer(br.readLine());
-            // 동물의 위치 (x,y)
-            x = Integer.parseInt(st.nextToken());
-            y = Integer.parseInt(st.nextToken());
-
+            // 적절한 사대의 위치를 이분 탐색
             low = 0;
             high = M-1;
-
             while(low <= high)
             {
-                mid = (low + high) /2;
+                mid = (low + high)/2;
 
-                if(place[mid] > (L + x - y))
-                    high = mid-1;
-                else if(place[mid] < (-L +x +y))
-                    low = mid+1;
-                else
+                // 사대와 동물의 거리가 사정거리 내 일 경우 -> 사냥 성공
+                if((Math.abs(place[mid] - animal[i][0]) + animal[i][1]) <= L)
                 {
                     result++;
                     break;
                 }
+
+                // 사정거리 밖일 경우 -> x 좌표를 비교하여 사대 변경
+                if((place[mid] - animal[i][0]) < 0)
+                    // 값이 음수일 경우 -> 사대 기준 동물이 오른쪽에 있다는 뜻
+                    low = mid +1;
+                else
+                    // 값이 양수일 경우 -> 사대 기준 동물이 왼쪽에 있다는 뜻
+                    high = mid -1;
             }
         }
 
