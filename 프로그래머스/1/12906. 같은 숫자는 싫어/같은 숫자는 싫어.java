@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Solution {
-    public int[] solution(int []arr) {
+    public ArrayList solution(int []arr) {
         Queue<Integer> queue = new LinkedList<Integer>();
         ArrayList<Integer> arrayList = new ArrayList<Integer>();
         
@@ -21,12 +21,7 @@ public class Solution {
             prev = cur;
         }
         
-        int length = arrayList.size();
-        int[] answer = new int[length] ;
-        for(int i=0; i<length; i++){
-            answer[i] = arrayList.get(i);
-        }
 
-        return answer;
+        return arrayList;
     }
 }
