@@ -1,5 +1,4 @@
 
-
 import java.util.Scanner;
 
 public class Main
@@ -18,19 +17,25 @@ public class Main
         result = 0;
         while(true)
         {
-            char[] arr = Integer.toBinaryString(N).toCharArray();
+            int num = N;
             int cnt =0;
-            
-            for(int i=0; i<arr.length; i++)
-                if(arr[i] == '1')
+
+            while(num > 0)
+            {
+                if((num & 1) == 1)
+                {
                     cnt++;
-            
+                }
+
+                num = num >> 1;
+            }
+
             if(cnt <= K)
             {
                 System.out.println(result);
                 break;
             }
-            
+
             N++;
             result++;
         }
