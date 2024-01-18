@@ -9,7 +9,7 @@ import java.util.StringTokenizer;
 public class Main {
     static int result = Integer.MAX_VALUE;
     static int[] section;
-    static int[] sectionNum;
+    static int[] people;
     static ArrayList<Integer>[] adjacent;
 
     public static void main(String[] args) throws IOException {
@@ -30,9 +30,9 @@ public class Main {
 
         // 인구수 입력
         st = new StringTokenizer(br.readLine());
-        sectionNum = new int[N + 1];
+        people = new int[N + 1];
         for (int i = 1; i <= N; i++) {
-            sectionNum[i] = Integer.parseInt(st.nextToken());
+            people[i] = Integer.parseInt(st.nextToken());
         }
 
         // x 구역과 인접한 구역 입력
@@ -50,7 +50,7 @@ public class Main {
         // N/2 만큼 조합 생성 (구역을 두개로 나눔)
         visited = new boolean[N];
         for (int r = 1; r <= N / 2; r++) {
-            seperateSection(visited, 0, N, r);
+            divideSection(visited, 0, N, r);
         }
 
         if (result == Integer.MAX_VALUE) {
@@ -63,7 +63,7 @@ public class Main {
     }
 
     // 조합을 통해 구역을 두개로 나눔
-    private static void seperateSection(boolean[] visited, int depth, int n, int r) {
+    private static void divideSection(boolean[] visited, int depth, int n, int r) {
         if (r == 0) {
             ArrayList<Integer> sectionA = new ArrayList<>();
             ArrayList<Integer> sectionB = new ArrayList<>();
@@ -87,25 +87,24 @@ public class Main {
         }
 
         visited[depth] = true;
-        seperateSection(visited, depth + 1, n, r - 1);
+        divideSection(visited, depth + 1, n, r - 1);
 
         visited[depth] = false;
-        seperateSection(visited, depth + 1, n, r);
+        divideSection(visited, depth + 1, n, r);
     }
 
     // BFS 를 통해 인접해 있는지 확인
-    private static boolean bfs(ArrayList<Integer> sections, int n) {
+    private static boolean bfs(ArrayList<Integer> dividedSection, int n) {
         Queue<Integer> queue = new LinkedList<>();
         boolean[] check = new boolean[n + 1];
-        queue.add(sections.get(0));
-        check[sections.get(0)] = true;
+        queue.add(dividedSection.get(0));
+        check[dividedSection.get(0)] = true;
 
         int cnt = 1;
         while (!queue.isEmpty()) {
             int cur = queue.poll();
-
             for (int next : adjacent[cur]) {
-                if (sections.contains(next) && !check[next]) {
+                if (dividedSection.contains(next) && !check[next]) {
                     queue.add(next);
                     check[next] = true;
                     cnt++;
@@ -113,23 +112,24 @@ public class Main {
             }
         }
 
-        if (cnt == sections.size()) {
+        if (cnt == dividedSection.size()) {
             return true;
         }
 
         return false;
     }
 
+    // 두 구역 인구수 합의 차의 최솟값을 결과로 저장
     private static void calcMin(ArrayList<Integer> sectionA, ArrayList<Integer> sectionB) {
         int sumA = 0;
         int sumB = 0;
 
         for (int num : sectionA) {
-            sumA += sectionNum[num];
+            sumA += people[num];
         }
 
         for (int num : sectionB) {
-            sumB += sectionNum[num];
+            sumB += people[num];
         }
 
         result = Math.min(result, Math.abs(sumA - sumB));
