@@ -1,6 +1,6 @@
 # [level 2] 연도별 대장균 크기의 편차 구하기 - 299310 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/299310) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/299310#qna) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 03월 28일 21:06:36
+2024년 03월 28일 21:15:30
 
 ### 문제 설명
 
