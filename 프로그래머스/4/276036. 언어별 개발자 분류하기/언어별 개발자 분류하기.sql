@@ -1,5 +1,5 @@
 -- 코드를 작성해주세요
-WITH FRONT AS (
+WITH FRONT_SKILLS AS (
     SELECT 
         SUM(CODE)
     FROM 
@@ -11,12 +11,12 @@ WITH FRONT AS (
 SELECT
     CASE
         WHEN 
-            SKILL_CODE & (SELECT * FROM FRONT) AND 
+            SKILL_CODE & (SELECT * FROM FRONT_SKILLS) AND 
             SKILL_CODE & (SELECT CODE FROM SKILLCODES WHERE NAME = 'Python') THEN 'A'
         WHEN 
             SKILL_CODE & (SELECT CODE FROM SKILLCODES WHERE NAME = 'C#') THEN 'B'
         WHEN 
-            SKILL_CODE & (SELECT * FROM FRONT) THEN 'C'
+            SKILL_CODE & (SELECT * FROM FRONT_SKILLS) THEN 'C'
     END AS GRADE,
     ID,
     EMAIL
