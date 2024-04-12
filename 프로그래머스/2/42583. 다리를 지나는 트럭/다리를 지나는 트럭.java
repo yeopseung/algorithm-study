@@ -9,7 +9,7 @@ class Solution {
         for(int i=0; i < truck_weights.length; i++){
             int truck = truck_weights[i];
             
-            // 다리가 가득 찬 경우: 맨 앞 트럭 삭제
+            // 다리가 가득 찬 경우: 맨 앞 트럭 통과
             if(bridge.size() == bridge_length){
                 int end_truck = bridge.poll();
                 cur_weight -= end_truck;
