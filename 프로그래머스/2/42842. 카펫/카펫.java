@@ -3,21 +3,22 @@ class Solution {
         int[] answer = new int[2];
         
        
-        int sum = brown + yellow;   // 전체 크기
-        int m = 1;  // 세로
-        while(m <= (sum/2)){
-            if(sum % m == 0){
-                int n = sum / m;    // 가로
-    
-                int b = (n*2) + (m-2) * 2; 
+        int sum = brown + yellow;   
+        int height = 1;  
+        
+        while(height <= (sum/2)){
+            if(sum % height == 0){
+                int width = sum / height;
+                int b = (width*2) + (height-2) * 2; 
+                
                 if(b == brown){
-                    answer[0] = n;
-                    answer[1] = m;
+                    answer[0] = width;
+                    answer[1] = height;
                     break;
                 }
             }
              
-            m++;
+            height++;
         }
         
         return answer;
